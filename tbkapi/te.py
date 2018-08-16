@@ -2,7 +2,7 @@ import top.api
 import json
 # 获取淘宝客商品优惠券
 
-def get_tbk_coupon( page, keyword):
+def get_tbk_coupon( page, keyword, yj):
     req = top.api.TbkDgItemCouponGetRequest()
     req.set_app_info(top.appinfo('23464946', '9f11bf3465371f7bea54c7941e53b40a'))
 
@@ -21,11 +21,13 @@ def get_tbk_coupon( page, keyword):
     req.q = keyword
     # 返回商品的页数
     req.page_no = page
+    yj = yj
     try:
         resp = req.getResponse()
         s = resp['tbk_dg_item_coupon_get_response']['results']['tbk_coupon']
         for i in s:
-            print(i['item_url'], i['title'], i['volume'], i['zk_final_price'], i['coupon_info'], i['commission_rate'], i['coupon_click_url'])
+            if float(i['commission_rate']) > yj:
+                print(i['item_url'], i['title'], i['volume'], i['zk_final_price'], i['coupon_info'], i['commission_rate'], i['coupon_click_url'])
         #print(resp['tbk_dg_item_coupon_get_response']['total_results'])
     except Exception as e:
         print(e)
@@ -34,4 +36,4 @@ def get_tbk_coupon( page, keyword):
 if __name__ == '__main__':
     for i in range(1, 6):
         print(i)
-        get_tbk_coupon(i, '')
+        get_tbk_coupon(i, '耳机', 40)
