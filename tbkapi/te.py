@@ -1,5 +1,6 @@
 import top.api
-import json
+import re
+
 # 获取淘宝客商品优惠券
 
 def get_tbk_coupon( page, keyword, yj):
@@ -27,7 +28,9 @@ def get_tbk_coupon( page, keyword, yj):
         s = resp['tbk_dg_item_coupon_get_response']['results']['tbk_coupon']
         for i in s:
             if float(i['commission_rate']) > yj:
-                print(i['item_url'], i['title'], i['volume'], i['zk_final_price'], i['coupon_info'], i['commission_rate'], i['coupon_click_url'])
+                y = re.findall(r'\d+', i['coupon_info'])
+                qhj = round(float(i['zk_final_price'])-float(y[1]), 2)
+                print(i['item_url'], i['title'], i['volume'], i['zk_final_price'], i['coupon_info'], '券后价'+str(qhj), '佣金'+i['commission_rate'], i['coupon_click_url'])
         #print(resp['tbk_dg_item_coupon_get_response']['total_results'])
     except Exception as e:
         print(e)
@@ -36,4 +39,4 @@ def get_tbk_coupon( page, keyword, yj):
 if __name__ == '__main__':
     for i in range(1, 6):
         print(i)
-        get_tbk_coupon(i, '耳机', 40)
+        get_tbk_coupon(i, '卫衣', 5)
