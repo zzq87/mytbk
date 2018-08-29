@@ -5,9 +5,11 @@ import re
 
 def get_tbk_coupon( page, keyword, xl, yj): #好券清单
     req = top.api.TbkDgItemCouponGetRequest()
-    req.set_app_info(top.appinfo('23464946', '9f11bf3465371f7bea54c7941e53b40a'))
+    req.set_app_info(top.appinfo('23464945', '12137549a7bec77dbb3ed69247bb7c4d'))
+    #爱琴岛  23464945 12137549a7bec77dbb3ed69247bb7c4d  adz-17943200446
+    #菜谱  23464946  9f11bf3465371f7bea54c7941e53b40a  adzoneid-61894823
 
-    req.adzone_id = '61894823'
+    req.adzone_id = '17943200446'
     req.page_size = 50 # 每页数量
     req.q = keyword # 搜索关键词
     req.page_no = page #页码
@@ -33,4 +35,4 @@ def get_tbk_coupon( page, keyword, xl, yj): #好券清单
 if __name__ == '__main__':
     for i in range(1, 3):
         print(i)
-        get_tbk_coupon(i, '自喷漆', 50, 1)
+        get_tbk_coupon(i, '男牛仔裤', 50, 10)
